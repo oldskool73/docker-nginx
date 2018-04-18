@@ -1,4 +1,4 @@
-FROM nginx:1.11-alpine
+FROM nginx:1.13-alpine
 
 COPY nginx.conf /etc/nginx/
 COPY site.template /tmp/
@@ -26,3 +26,4 @@ WORKDIR /var/www
 CMD ["/bin/bash","-c","envsubst '$$SERVER_NAME $$SERVER_ROOT' < /tmp/site.template > /etc/nginx/sites-enabled/${SERVER_NAME}.conf && nginx"]
 
 EXPOSE 80
+EXPOSE 443

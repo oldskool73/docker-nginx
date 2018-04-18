@@ -2,10 +2,17 @@ server {
 
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
+    listen 443 ssl;
 
     server_name ${SERVER_NAME};
     root /var/www/${SERVER_NAME}${SERVER_ROOT};
     index index.php index.html index.htm;
+
+    ssl_certificate /etc/ssl/certs/${SERVER_NAME}.crt;
+    ssl_certificate_key /etc/ssl/certs/${SERVER_NAME}.key;
+
+    add_header Access-Control-Allow-Origin *;
+    add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
 
     location / {
          try_files $uri $uri/ /index.php$is_args$args;
@@ -23,6 +30,4 @@ server {
         deny all;
     }
 }
-
-
 
